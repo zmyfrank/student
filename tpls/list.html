@@ -1,0 +1,67 @@
+<div class="panel panel-primary" ng-controller="listData">
+    <div class="panel-heading">列表管理</div>
+    <div  class="panel-body">
+        <div class="row">
+            <div class="col-sm-3">
+                类型：
+                <select class="selectpicker">
+                    <option>全部</option>
+                    <option>banner</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                资质：
+                <select class="selectpicker">
+                    <option>全部</option>
+                    <option>已发布</option>
+                    <option>草稿</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                修行等级：
+                <select class="selectpicker">
+                    <option>全部</option>
+                    <option>已发布</option>
+                    <option>草稿</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-primary btn-sm">搜索</button>
+            </div>
+        </div>
+        <div class="panel panel-primary group-inner">
+            <div class="panel-heading">
+                内容列表
+                <button type="button" class="btn btn-warning btn-xs pull-right">新增</button>
+            </div>
+            <div  class="panel-body inner-list" >
+                <table class="table table-striped table-inner" ng-if="items" >
+                    <tr style="text-align: center">
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>类型</th>
+                        <th>报名时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr ng-repeat="item in items | paging:currentPage*listsPerPage | limitTo:listsPerPage">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.type }}</td>
+                        <td>{{ item.joinTime | date:"yyyy-MM-dd hh:mm:ss" }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-xs">编辑</button>
+                            <button type="button" ng-click="remove(item.id)" class="btn btn-primary btn-xs">删除</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <nav>
+            <ul class="pagination">
+                <li ng-click="prevPage()"><a href="">&laquo;</a></li>
+                <li ng-model="pageNum" ng-repeat="num in  pageNum" ng-click="setPage(num)"><a href="">{{num+1}}</a></li>
+                <li ng-click="nextPage()"><a href="">&raquo;</a></li>
+            </ul>
+        </nav>
+    </div><!--上层列表结束-->
+</div><!--路由内容结束-->

@@ -1,0 +1,30 @@
+<nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">爆炸登陆页</a>
+        </div>
+        <p class="pull-right">
+            超级管理员
+            <img class="img-circle" src="imgs/1.jpg" alt="用户头像">
+            <button type="button" class="btn btn-primary btn-sm ">退出登陆</button>
+        </p>
+</nav><!-- /.navbar -->
+
+<div class="container">
+
+    <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+            <div class="list-group">
+                <a href="" ui-sref=".list" class="list-group-item">学员列表</a>
+                <a href="" ui-sref=".add" class="list-group-item">新增学员</a>
+                <a href="" ui-sref=".info" class="list-group-item">个人信息</a>
+            </div>
+        </div><!--/.sidebar-offcanvas-->
+
+        <div class="col-xs-12 col-sm-9"><!--这个里面放路由里的东西-->
+            <div ui-view="">
+            </div>
+        </div><!--/.col-xs-12.col-sm-9-->
+    </div><!--/row-->
+</div><!--/.container-->
+
