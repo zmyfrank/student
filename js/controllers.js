@@ -12,7 +12,7 @@ var myAppCtrl =angular.module("myAppCtrl",[]);
         ////测试失败。。。以后再来
 
         //取出服务器中的数据
-        userListService.query()
+        /*userListService.query()
                 .then(function (res) {                   //这里使用then方法，当前面获取到数据之后，再取出值
                     $scope.items = res.data.data;
                     console.log($scope.items);
@@ -26,7 +26,7 @@ var myAppCtrl =angular.module("myAppCtrl",[]);
                 }
                 console.log($scope.pageNum)
                 $scope.currentPage = 0;                     //设置当前页是0
-                $scope.listsPerPage =120;                     //设置每页显示120个
+                $scope.listsPerPage =10;                     //设置每页显示120个
 
                 $scope.setPage = function (num) {           //点击事件，点击之后显示为当前页数的页码数
                     $scope.currentPage=num;                 //将当前页设置为页码数
@@ -44,9 +44,37 @@ var myAppCtrl =angular.module("myAppCtrl",[]);
                         console.log( $scope.currentPage++);
                     }
                 }
-            });
+            });*/
+        userListService.getStudentList().then(function(res){
+            $scope.items = res.data.data;
+            $scope.dataNum = $scope.items.length;     //获取总个数
+            console.log( $scope.dataNum);
+            $scope.pages = Math.ceil($scope.dataNum/3); //按照每页显示十个数据得到总页数
+            $scope.pageNum=[];
+            for (var i =0;i<$scope.pages;i++) {
+                $scope.pageNum.push(i);
+            }
+            //console.log($scope.pageNum);
+            $scope.currentPage = 0;                     //设置当前页是0
+            $scope.listsPerPage =10;                     //设置每页显示10个
+
+            $scope.setPage = function (num) {           //点击事件，点击之后显示为当前页数的页码数
+                $scope.currentPage=num;                 //将当前页设置为页码数
+            };
+            $scope.prevPage = function () {
+                if($scope.currentPage>0) {
+                    $scope.currentPage--;
+                }
+            };
+            $scope.nextPage = function () {
+                if ($scope.currentPage < $scope.pages-1){
+                    $scope.currentPage++;
+                }
+            }
+        })
+
         //删除其中的一条东西
-        $scope.remove = function (id) {
+      /*  $scope.remove = function (id) {
             var index = -1;
             angular.forEach($scope.items,function (item,key) {
                 if (item.id === id) {
@@ -57,32 +85,9 @@ var myAppCtrl =angular.module("myAppCtrl",[]);
             if (index!==-1){
                 $scope.items.splice(index,1)
             }
-        };
-       /* //翻页器
-        $scope.dataNum = $scope.num.length;     //获取总个数
-        console.log( $scope.dataNum);
-        $scope.pages = Math.ceil($scope.dataNum/3); //按照每页显示十个数据得到总页数
-        $scope.pageNum=[];
-        for (var i =0;i<$scope.pages;i++) {
-            $scope.pageNum.push(i);
-        }
-        //console.log($scope.pageNum);
-        $scope.currentPage = 0;                     //设置当前页是0
-        $scope.listsPerPage =10;                     //设置每页显示10个
+        };*/
+        //翻页器
 
-        $scope.setPage = function (num) {           //点击事件，点击之后显示为当前页数的页码数
-            $scope.currentPage=num;                 //将当前页设置为页码数
-        };
-        $scope.prevPage = function () {
-            if($scope.currentPage>0) {
-                $scope.currentPage--;
-            }
-        };
-        $scope.nextPage = function () {
-            if ($scope.currentPage < $scope.pages-1){
-                $scope.currentPage++;
-            }
-        }*/
     }]);
    /* myAppCtrl.controller('calendar', function ($scope) {
         var vm = $scope.vm = {};
