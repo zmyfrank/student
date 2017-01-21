@@ -1,7 +1,8 @@
 /**
  * Created by Administrator on 2017/1/7.
  */
-var myApp = angular.module("myApp",['ui.router','myAppService','myAppCtrl','myAppFil']); //注入路由服务
+var myApp = angular.module("myApp",['ui.router','myAppService','myAppCtrl','myAppFil',
+'ngAnimate','ngSanitize','ui.bootstrap']); //注入路由服务
 
 
 

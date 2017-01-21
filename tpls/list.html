@@ -43,7 +43,7 @@
                         <th>报名时间</th>
                         <th>操作</th>
                     </tr>
-                    <tr ng-repeat="item in items | paging:currentPage*listsPerPage | limitTo:listsPerPage">
+                    <tr ng-repeat="item in items | paging:currentPage">
                         <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.type }}</td>
@@ -56,12 +56,7 @@
                 </table>
             </div>
         </div>
-        <nav>
-            <ul class="pagination">
-                <li ng-click="prevPage()"><a href="">&laquo;</a></li>
-                <li ng-model="pageNum" ng-repeat="num in  pageNum" ng-click="setPage(num)"><a href="">{{num+1}}</a></li>
-                <li ng-click="nextPage()"><a href="">&raquo;</a></li>
-            </ul>
-        </nav>
+        <!--页码按钮开始-->
+      <ul uib-pagination total-items="totalItems" ng-change="pageChanged()" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" previous-text="上一页" next-text="下一页" first-text="首页" last-text="末页"></ul>
     </div><!--上层列表结束-->
 </div><!--路由内容结束-->

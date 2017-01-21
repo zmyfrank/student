@@ -6,11 +6,8 @@ var myAppFil = angular.module("myAppFil",[]);
 /*页码过滤器*/
     myAppFil.filter('paging',function(){      //paging 过滤器
 
-            return function(items,start){     //两个参数 lists 是在 html 里你ng-repeat的原始数据：
-                //console.log(items);
-                //  start 也就是 paging 后面传的参数，即 currentPage*listsPerPage
-
-                    console.log(start);
-                    return items.slice(start);     //将原始数据按照 start 分割
+            return function(items,currentPage){     //传入了现页面
+                var pagesize =  (currentPage-1)*10  //当前页面起始位置，后面的10可以通过传入的参数更改
+                return items.slice(pagesize,pagesize+10);     //将原始数据按照 start 分割
             };
     });
