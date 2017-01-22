@@ -1,92 +1,75 @@
 /**
  * Created by Administrator on 2017/1/7.
  */
-var myAppCtrl =angular.module("myAppCtrl",[]);
-    myAppCtrl.controller('listData',function ($scope,userListService,$http) {
-
-        userListService.getStudentList().then(function(res){
-            $scope.items = res.data.data;
-            $scope.totalItems = res.data.data.length;       //数据的总数
-            $scope.currentPage = 1;                         //当前页码
-            $scope.maxSize = 10;                            //每页最多显示多少
-            $scope.pageChanged = function() {               //这里是测试当前页面的change事件的
-                console.log('Page changed to: ' + $scope.currentPage);
-            };
-        });
-
-        //删除其中的一条东西
-        $scope.remove = function (id) {
-            var index = -1;
-            angular.forEach($scope.items,function (item,key) {
-                if (item.id === id) {
-                    index=key;                      //foreach方法，会返回一个key值，这个值是当前的这个值的下标
-                    console.log(key);
-                }
-            });
-            if (index!==-1){
-                $http ({                            //使用post方法来删除，注意id必须要写成这种对应的形式
-                    method:'POST',
-                    url:'/student-ajax/students',
-                    params:{id:id}
-                }).then($scope.items.splice(index,1))
-            }
+var myAppCtrl = angular.module("myAppCtrl", []);
+myAppCtrl.controller('listData', function ($scope, userListService, $http) {
+    userListService.getStudentList().then(function (res) {
+        /*获取数据*/
+        $scope.items = res.data.data;
+        /*翻页器---基于bootstrap.ui*/
+        $scope.totalItems = res.data.data.length;       //数据的总数
+        $scope.currentPage = 1;                         //当前页码
+        $scope.maxSize = 10;                            //每页最多显示多少
+        $scope.pageChanged = function () {               //这里是测试当前页面的change事件的
+            console.log('Page changed to: ' + $scope.currentPage);
         };
     });
-// myAppCtrl.controller('PaginationDemoCtrl', function ($scope, $log) {
-//     $scope.totalItems = 64;
-//
-//     $scope.setPage = function (pageNo) {
-//         $scope.currentPage = pageNo;
-//     };
-//
-//     $scope.pageChanged = function() {
-//         $log.log('Page changed to: ' + $scope.currentPage);
-//     };
-//
-//     $scope.maxSize = 5;
-// });
-   /* myAppCtrl.controller('calendar', function ($scope) {
-        var vm = $scope.vm = {};
+    /*删除功能*/
+    $scope.remove = function (id) {
+        var index = -1;
+        angular.forEach($scope.items, function (item, key) {
+            if (item.id === id) {
+                index = key;                      //foreach方法，会返回一个key值，这个值是当前的这个值的下标
+                console.log(key);
+            }
+        });
+        if (index !== -1) {
+            userListService.deleteStudent(id).then($scope.items.splice(index, 1));
+            /*$http({                            //使用post方法来删除，注意id必须要写成这种对应的形式
+                method: 'POST',
+                url: '/student-ajax/students',
+                params: {id: id}
+            }).then($scope.items.splice(index, 1))*/
+        }
+    };
+});
 
-        //初始化日期
-        vm.today = function() {
-            vm.calendar = new Date();
-        };
-        vm.today();
+myAppCtrl.controller('addstudent',function ($scope) {
+    /*时间选择器---基于bootstrap.ui*/
+    $scope.today = function() {
+        $scope.dt = new Date();         //等下要获取数据的话，就用这个dt就行了
+    };
+    $scope.today();                     //直接显示今天的时间
 
-        //清除当前日期
-        vm.clear = function() {
-            vm.calendar = null;
-        };
+    $scope.clear = function() {
+        $scope.dt = null;               //清除时间
+    };
 
+    $scope.inlineOptions = {
+        //minDate: new Date(),
+        showWeeks: true
+    };
 
-        // 不允许选择周末
-        vm.disabled = function(date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        };
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        maxDate: new Date(2018, 1, 1),
+        minDate: new Date(),
+        startingDay: 1
+    };
 
-        //最小日期开关
-        vm.toggleMin = function() {
-            vm.minDate = vm.minDate ? null : new Date();
-        };
-        vm.toggleMin();
+    $scope.toggleMin = function() {         //这里我不知道是啥，但是必须要- -
+        $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+        $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
 
-        //弹出式日历触发函数
-        vm.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
+    $scope.toggleMin();
 
-            vm.opened = true;
-        };
+    $scope.open2 = function() {
+        $scope.popup2.opened = true;        //配合下面使用，点击弹出，再点击关闭
+    };
 
-        //自定义选项
-        vm.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1,
-            formatDayTitle: 'yyyy MMMM'
-        };
+    $scope.popup2 = {
+        opened: false
+    };
 
-        //输出格式控制,来源:官方date filter
-        vm.formats = ['yyyy-MMMM-dd', 'yyyy/MM/dd', 'yyyy.MM.dd', 'shortDate'];
-        vm.format = vm.formats[1];
-    });*/
+})

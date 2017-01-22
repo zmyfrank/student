@@ -8,8 +8,8 @@ myAppService.service('userListService',['$http', function ($http) {
    this.getStudentList = function () {
        return $http.get("/student-ajax/students");
    };
-   this.deleteStudent = function () {
-       return $http.post('/student-ajax/students?id='+id);
+   this.deleteStudent= function (id) {
+       return $http.post("/student-ajax/students",{headers:{"Content-Type":"application/application/x-www-form-urlencoded"}}, {params: {'id':id}});
    }
 }]);
 
