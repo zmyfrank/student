@@ -9,79 +9,56 @@ var myAppDire = angular.module("myAppDire",[]);
  * Created by CHEN on 2016/11/1.
  */
 
-myAppDire.directive('myPagination', function () {
+myAppDire.directive('numbericInput', function() {
     return {
-        restrict: 'EA',
-        replace: true,
+        require: 'ngModel',
+        restrict: "EA",
         scope: {
-            option: '=pageOption'
+            max: '@', // 数字最大值
+            maxLength: '@', // 数字最大长度
+            min: '@' // 数字最小值
         },
-        template: '<ul class="pagination">' +
-        '<li ng-click="pageClick(p)" ng-repeat="p in page" class="{{option.curr==p?\'active\':\'\'}}">' +
-        '<a href="javascript:;">{{p}}</a>' +
-        '</li>' +
-        '</ul>',
-        link: function ($scope) {
-            //容错处理
-            if (!$scope.option.curr || isNaN($scope.option.curr) || $scope.option.curr < 1) $scope.option.curr = 1;
-            if (!$scope.option.all || isNaN($scope.option.all) || $scope.option.all < 1) $scope.option.all = 1;
-            if ($scope.option.curr > $scope.option.all) $scope.option.curr = $scope.option.all;
-            if (!$scope.option.count || isNaN($scope.option.count) || $scope.option.count < 1) $scope.option.count = 10;
+        link: function (scope, element, attr, ngModelCtrl) {
+            function fromUser(tezxt) {
+                if (text == undefined) {
+                    return '';
+                }
+                var max = +scope.max;
+                var maxLength = +scope.maxLength;
+                var min = +scope.min;
 
+                // 替换所有非数字为空
+                var transformedInput = text.replace(/[^0-9]/g, '');
 
-            //得到显示页数的数组
-            $scope.page = getRange($scope.option.curr, $scope.option.all, $scope.option.count);
+                // 长度超过去掉
+                if (maxLength && text.length > maxLength) {
+                    transformedInput = text.slice(0, maxLength);
+                }
+                // 数字大小超过max的，等于最大值max
+                if (max && +transformedInput > max) {
+                    transformedInput = max + '';
+                }
+                // 数字大小小于min的，等于min
+                if (min && +transformedInput < min) {
+                    transformedInput = min + '';
+                }
 
-            //绑定点击事件
-            $scope.pageClick = function (page) {
-                if (page == '«') {
-                    page = parseInt($scope.option.curr) - 1;
-                } else if (page == '»') {
-                    page = parseInt($scope.option.curr) + 1;
+                if(transformedInput !== text) {
+                    // $setViewValue 更新视图值
+                    // 视图值改变时会被调用，比如inputlect指令就会调用这个函数
+                    ngModelCtrl.$setViewValue(transformedInput);
+                    // 更新视图
+                    ngModelCtrl.$render();
                 }
-                if (page < 1) page = 1;
-                else if (page > $scope.option.all) page = $scope.option.all;
-                //点击相同的页数 不执行点击事件
-                if (page == $scope.option.curr) return;
-                if ($scope.option.click && typeof $scope.option.click === 'function') {
-                    $scope.option.click(page);
-                    $scope.option.curr = page;
-                    $scope.page = getRange($scope.option.curr, $scope.option.all, $scope.option.count);
-                }
-            };
-
-            //返回页数范围（用来遍历）
-            function getRange(curr, all, count) {
-                //计算显示的页数
-                curr = parseInt(curr);
-                all = parseInt(all);
-                count = parseInt(count);
-                var from = curr - parseInt(count / 2);
-                var to = curr + parseInt(count / 2) + (count % 2) - 1;
-                //显示的页数容处理
-                if (from <= 0) {
-                    from = 1;
-                    to = from + count - 1;
-                    if (to > all) {
-                        to = all;
-                    }
-                }
-                if (to > all) {
-                    to = all;
-                    from = to - count + 1;
-                    if (from <= 0) {
-                        from = 1;
-                    }
-                }
-                var range = [];
-                for (var i = from; i <= to; i++) {
-                    range.push(i);
-                }
-                range.push('»');
-                range.unshift('«');
-                return range;
+                return transformedInput;
             }
 
+            // 推入将要执行的函数数组，
+            // 其中的函数依次被调用，并将结果传递给下一个，
+            // 最后出来的值会被传递到model中，
+            // 还会包括验证和转换值的过程，验证中会使用$setValidity方法
+            ngModelCtrl.$parsers.push(fromUser);
         }
-    }
+    };
 });
+

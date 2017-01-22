@@ -71,5 +71,6 @@ myAppCtrl.controller('addstudent',function ($scope) {
     $scope.popup2 = {
         opened: false
     };
+    $scope.time=$scope.dt.getTime()         //转化为毫秒数
 
 })

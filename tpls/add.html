@@ -2,62 +2,63 @@
 <div class="panel panel-primary" ng-controller='addstudent'>
     <div class="panel-heading">新增页面</div>
     <div  class="panel-body">
-        <form class="form-horizontal" role="form" novalidate="novalidate" name="from">
+        <form class="form-horizontal" novalidate="novalidate" name="myfrom">
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">姓名</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="请输入姓名" ng-model="user.name" required>
+                    <input type="text" class="form-control" id="name" placeholder="请输入姓名" name="userName" ng-model="user.name" required>
+                    <p style="color: red;" ng-show="myfrom.userName.$error.required">定要要输入才可以哟！</p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="qq" class="col-sm-2 control-label">QQ</label>
                 <div class="col-sm-10">
-                    <input type="text" ng-maxlength="12" class="form-control" id="qq" placeholder="请输入qq号码" ng-model="user.qq">
+                    <input type="text" name="qq" ng-maxlength="12" class="form-control" id="qq" placeholder="请输入qq号码" ng-model="user.qq">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">修真类型</label>
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="1" > CSS
+                        <input type="radio" name="type" value="1" > CSS
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="2"> JS
+                        <input type="radio" name="type" value="2"> JS
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions"  value="3"> JAVA
+                        <input type="radio" name="type"  value="3"> JAVA
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="4" > 运维
+                        <input type="radio" name="type" value="4" > 运维
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="5"> DBA
+                        <input type="radio" name="type" value="5"> DBA
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="6"> 产品
+                        <input type="radio" name="type" value="6"> 产品
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="7"> Android
+                        <input type="radio" name="type" value="7"> Android
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="inlineRadioOptions" value="8"> IOS
+                        <input type="radio" name="type" value="8"> IOS
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label for="school" class="col-sm-2 control-label">毕业学院</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="school" placeholder="请输入毕业院校">
+                    <input type="text" name="school" class="form-control" id="school" placeholder="请输入毕业院校">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2">资质</label>
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="intelligence" value="good"> 学霸
+                        <input type="radio" name="talent" value="1"> 学霸
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="intelligence" value="normal"> 学渣
+                        <input type="radio" name="talent" value="2"> 学渣
                     </label>
                 </div>
             </div>
@@ -65,22 +66,22 @@
                 <label class="control-label col-sm-2">资质</label>
                 <div class="col-sm-10">
                     <label class="radio-inline">
-                        <input type="radio" name="time" value="zero"> 零基础
+                        <input type="radio" name="time" value="1"> 零基础
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="time" value="three"> 修行三个月以内
+                        <input type="radio" name="time" value="2"> 修行三个月以内
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="time" value="six"> 修行六个月以内
+                        <input type="radio" name="time" value="3"> 修行六个月以内
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="time" value="oney"> 修行一年以内
+                        <input type="radio" name="time" value="4"> 修行一年以内
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="time" value="threey"> 修行三年以内
+                        <input type="radio" name="time" value="5"> 修行三年以内
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="time" value="threeo"> 修行三年以上
+                        <input type="radio" name="time" value="6"> 修行三年以上
                     </label>
                 </div>
             </div>
@@ -94,7 +95,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="say" class="col-sm-2 control-label">修行离愿</label>
+                <label for="say" class="col-sm-2 control-label">修行立愿</label>
                 <div class="col-sm-10">
                     <textarea class="form-control" id="say" ></textarea>
                 </div>
