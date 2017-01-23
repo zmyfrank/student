@@ -61,4 +61,45 @@ myAppDire.directive('numbericInput', function() {
         }
     };
 });
+    //接下来是验证是否与服务器上同名
+myAppDire.directive('ensureUnique', function($http) {
+    return {
+        require: 'ngModel',
+        link: function(scope, ele, attrs, c) {
+            scope.$watch(attrs.ngModel, function(n) {
+                if (!n) return;
+                $http({
+                    method: 'POST',
+                    url: '/api/check/' + attrs.ensureUnique,        //这里应该都会不一样吧
+                    data: {'field': attrs.ensureUnique}
+                }).success(function(data) {
+                    c.$setValidity('unique', data.isUnique);
+                }).error(function(data) {
+                    c.$setValidity('unique', false);
+                });
+            });
+        }
+    };
+});
+
+/*失焦后再进行表单的验证*/
+myAppDire.directive('ngFocus', [function() {
+    var FOCUS_CLASS = "ng-focused";
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            ctrl.$focused = false;
+            element.bind('focus', function(evt) {
+                scope.$apply(function() {
+                    ctrl.$focused = true;
+                });
+            }).bind('blur', function(evt) {
+                scope.$apply(function() {
+                    ctrl.$focused = false;
+                });
+            });
+        }
+    };
+}]);
 

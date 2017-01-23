@@ -11,6 +11,9 @@ myAppService.service('userListService',['$http', function ($http) {
    this.deleteStudent= function (id) {
        return $http.post("/student-ajax/students",{headers:{"Content-Type":"application/application/x-www-form-urlencoded"}}, {params: {'id':id}});
    }
+    this.addStudent= function (id) {
+        return $http.post("/student-ajax/student",{headers:{"Content-Type":"application/application/x-www-form-urlencoded"}}, {params: id});
+    }
 }]);
 
 /*

@@ -34,7 +34,7 @@ myAppCtrl.controller('listData', function ($scope, userListService, $http) {
     };
 });
 
-myAppCtrl.controller('addstudent',function ($scope) {
+myAppCtrl.controller('addstudent',function ($scope,userListService) {
     /*时间选择器---基于bootstrap.ui*/
     $scope.today = function() {
         $scope.dt = new Date();         //等下要获取数据的话，就用这个dt就行了
@@ -71,6 +71,31 @@ myAppCtrl.controller('addstudent',function ($scope) {
     $scope.popup2 = {
         opened: false
     };
-    $scope.time=$scope.dt.getTime()         //转化为毫秒数
+    $scope.time=$scope.dt.getTime();         //转化为毫秒数
 
-})
+    $scope.creatStudent = function () {     //添加学生
+        var student = {
+            name:$scope.user.name,
+            qq:$scope.user.qq,
+            type:$scope.user.type,
+            school:$scope.user.school,
+            talent:$scope.user.level,
+            level:$scope.user.level,
+            joinTime:$scope.time,
+            wish:$scope.user.wish
+        };
+        userListService.addStudent(student).success(function () {
+            alert("上传成功")
+        })
+    };
+
+    $scope.reseatStudent = function () {
+        $scope.user.name="";
+        $scope.user.type="";
+        $scope.user.school="";
+        $scope.user.wish="";
+        $scope.user.qq="";
+        $scope.user.talent=null;
+        $scope.user.level=null;
+    }
+});
