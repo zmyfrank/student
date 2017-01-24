@@ -1,4 +1,4 @@
-<div class="panel panel-primary">
+<div class="panel panel-primary" ng-controller="info">
     <div class="panel-heading">个人信息</div>
     <div  class="panel-body">
         <form class="form-horizontal" role="form">
@@ -17,9 +17,9 @@
             <div class="form-group">
                 <label for="avatar" class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
-                    <button href="#" class="btn btn-primary btn-sm" role="button">选择头像</button>
+                    <button class="btn btn-primary" ngf-select ng-model="files" accept="image/*" ng-max-size="300KB">请选择一张图片</button>
+                    <img ng-src="{{ files }}">
                 </div>
-            </div>
             <div class="row innerbutton">
                 <div class="col-sm-4 col-sm-offset-2">
                     <button href="#" class="btn btn-primary btn-lg" role="button">保存</button>

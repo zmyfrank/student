@@ -12,5 +12,7 @@
     <orderEntry type="library" name="angular-ui-router" level="application" />
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" name="angular-messages" level="application" />
+    <orderEntry type="library" name="ng-file-upload" level="application" />
+    <orderEntry type="library" name="ng-file-upload-shim" level="application" />
   </component>
 </module>
