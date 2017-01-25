@@ -15,17 +15,17 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="avatar" class="col-sm-2 control-label">头像</label>
+                <label class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
                     <button class="btn btn-primary" ngf-select ng-model="files" accept="image/*" ng-max-size="300KB">请选择一张图片</button>
-                    <img ng-src="{{ files }}">
                 </div>
-            <div class="row innerbutton">
-                <div class="col-sm-4 col-sm-offset-2">
+                <div class="row innerbutton">
+                    <div class="col-sm-4 col-sm-offset-2">
                     <button href="#" class="btn btn-primary btn-lg" role="button">保存</button>
-                </div>
-                <div class="col-sm-4 col-sm-offset-2">
-                    <button href="#" class="btn btn-primary btn-lg" role="button">取消</button>
+                    </div>
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button href="#" class="btn btn-primary btn-lg" role="button">取消</button>
+                    </div>
                 </div>
             </div>
         </form>

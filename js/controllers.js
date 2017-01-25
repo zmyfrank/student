@@ -106,7 +106,7 @@ myAppCtrl.controller('addstudent',function ($scope,userListService) {
         $scope.user.level=null;
     }
 });
-myAppCtrl.controller('info', ['$scope', '$http',,'Upload',function($scope, $http,Upload) {
+myAppCtrl.controller('info', ['$scope', '$http','Upload',function($scope, $http,Upload) {
     $scope.uploadImg = '';
     //提交
     $scope.submit = function () {
