@@ -7,7 +7,7 @@ myAppCtrl.controller('listData', function ($scope, userListService, $http) {
         /*获取数据*/
         $scope.items = res.data.data;
         /*翻页器---基于bootstrap.ui*/
-        $scope.totalItems = res.data.data.length;       //数据的总数
+        $scope.totalItems = $scope.items.length;       //数据的总数
         $scope.currentPage = 1;                         //当前页码
         $scope.maxSize = 10;                            //每页最多显示多少
         $scope.pageChanged = function () {               //这里是测试当前页面的change事件的
@@ -32,6 +32,28 @@ myAppCtrl.controller('listData', function ($scope, userListService, $http) {
             }).then($scope.items.splice(index, 1))*/
         }
     };
+    //筛选的方法
+    $scope.search = function () {
+        userListService.getStudentList().then(function (res) {
+            $scope.items = res.data.data;
+            if (!!$scope.type){
+                $scope.items = $scope.items.filter(function (item) {
+                    return item.type == $scope.type
+                });
+            }
+            if (!!$scope.level){
+                $scope.items = $scope.items.filter(function (item) {
+                    return item.type == $scope.level
+                });
+            }
+            if (!!$scope.talent){
+                $scope.items = $scope.items.filter(function (item) {
+                    return item.talent == $scope.talent
+                });
+            }
+            $scope.totalItems = $scope.items.length
+        })
+    }
 });
 
 myAppCtrl.controller('addstudent',function ($scope,userListService) {
@@ -53,7 +75,7 @@ myAppCtrl.controller('addstudent',function ($scope,userListService) {
     $scope.dateOptions = {
         formatYear: 'yy',
         maxDate: new Date(2018, 1, 1),
-        minDate: new Date(),
+        minDate: new Date(),        //只能选今天或者以后
         startingDay: 1
     };
 
@@ -106,31 +128,29 @@ myAppCtrl.controller('addstudent',function ($scope,userListService) {
         $scope.user.level=null;
     }
 });
-myAppCtrl.controller('info', ['$scope', '$http','Upload',function($scope, $http,Upload) {
-    $scope.uploadImg = '';
-    //提交
-    $scope.submit = function () {
-        $scope.upload($scope.files);
-    };
-    $scope.upload = function (file) {
-        $scope.fileInfo = file;
-        Upload.upload({
-            //服务端接收
-            url: 'Ashx/UploadFile.ashx',
-            //上传的同时带的参数
-            data: { 'username': $scope.username },
-            file: file
-        }).progress(function (evt) {
-            //进度条
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progess:' + progressPercentage + '%' + evt.config.file.name);
-        }).success(function (data, status, headers, config) {
-            //上传成功
-            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-            $scope.uploadImg = data;
-        }).error(function (data, status, headers, config) {
-            //上传失败
-            console.log('error status: ' + status);
-        });
-    };
-}]);
+/*info页面的controller*/
+myAppCtrl.controller('info',function($scope, $http, Upload,$timeout) {
+    $scope.uploadFiles = function (file, errFiles) {            //上传图片
+        $scope.f = file;
+        $scope.errFile = errFiles && errFiles[0];
+        if (file) {
+            file.upload = Upload.upload({
+                url:'/student-image/',
+                data:{file:file}
+            });
+            file.upload.then(function (response) {
+                $timeout(function () {
+                    file.result = response.data;
+                    console.log(response.data);
+                    $scope.imgurl = response.data.data.url;
+                });
+            },function (response) {
+                if (response.statues>0)
+                    $scope.errorMsg = response.statues + ':' + response.data;
+            },function (evt) {
+                file.progress = Math.min(100,parseInt(100.0*evt.loaded/evt.total));
+            });
+        }
+    }
+        //$scope.imgurl = window.webkitURL.createObjectURL($scope.f);
+});

@@ -17,15 +17,21 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
-                    <button class="btn btn-primary" ngf-select ng-model="files" accept="image/*" ng-max-size="300KB">请选择一张图片</button>
+                    <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file,$invalidFiles)" ng-model="files" accept="image/*" ng-max-size="300KB">请选择一张图片</button>
                 </div>
-                <div class="row innerbutton">
-                    <div class="col-sm-4 col-sm-offset-2">
+                <div class="col-sm-2 col-sm-offset-2">文件名：</div>
+                <div class="col-sm-4">{{ f.name }} {{ errFile.name }} {{ errFile.$error }} {{ errFile.$errorParam }}</div>
+                <div ng-show="f.progress >=0" style='width:{{ f.progress }}%' ng-bind='f.progress + "%"'></div>{{ errorMsg }}
+            </div>
+            <div class="col-sm-4 col-sm-offset-4">
+                <img src="{{ imgurl }}" alt="图片" ng-show="f" style="max-width: 100px;max-height: 100px;text-align: center;">
+            </div>
+            <div class="row innerbutton">
+                <div class="col-sm-4 col-sm-offset-2">
                     <button href="#" class="btn btn-primary btn-lg" role="button">保存</button>
-                    </div>
-                    <div class="col-sm-4 col-sm-offset-2">
-                        <button href="#" class="btn btn-primary btn-lg" role="button">取消</button>
-                    </div>
+                </div>
+                <div class="col-sm-4 col-sm-offset-2">
+                    <button href="#" class="btn btn-primary btn-lg" role="button">取消</button>
                 </div>
             </div>
         </form>

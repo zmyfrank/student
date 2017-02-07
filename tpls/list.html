@@ -4,29 +4,40 @@
         <div class="row">
             <div class="col-sm-3">
                 类型：
-                <select class="selectpicker">
-                    <option>全部</option>
-                    <option>banner</option>
+                <select class="selectpicker" ng-model="type">
+                    <option value="">全部</option>
+                    <option value="1">CSS</option>
+                    <option value="2">JS</option>
+                    <option value="3">JAVA</option>
+                    <option value="4">运维</option>
+                    <option value="5">DBA</option>
+                    <option value="6">产品</option>
+                    <option value="7">Android</option>
+                    <option value="8">IOS</option>
                 </select>
             </div>
             <div class="col-sm-3">
                 资质：
-                <select class="selectpicker">
-                    <option>全部</option>
-                    <option>已发布</option>
-                    <option>草稿</option>
+                <select class="selectpicker" ng-model="talent">
+                    <option value="">全部</option>
+                    <option value="1">学霸</option>
+                    <option value="2">学渣</option>
                 </select>
             </div>
             <div class="col-sm-3">
-                修行等级：
-                <select class="selectpicker">
-                    <option>全部</option>
-                    <option>已发布</option>
-                    <option>草稿</option>
+                等级：
+                <select class="selectpicker" ng-model="level">
+                    <option value="">全部</option>
+                    <option value="1">零基础</option>
+                    <option value="2">修行三个月内</option>
+                    <option value="3">修行六个月内</option>
+                    <option value="4">修行一年以内</option>
+                    <option value="5">修行三年以内</option>
+                    <option value="6">修行三年以上</option>
                 </select>
             </div>
             <div class="col-sm-3">
-                <button type="button" class="btn btn-primary btn-sm">搜索</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="search()">搜索</button>
             </div>
         </div>
         <div class="panel panel-primary group-inner">

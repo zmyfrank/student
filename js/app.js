@@ -9,8 +9,8 @@ var myApp = angular.module("myApp",['ui.router','myAppService','myAppCtrl','myAp
 myApp.config(function ($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/loginindex"); //当路由为空时，加载哪个页面
     $stateProvider
-        .state("loginindex",{                 //路由名字
-            url:"/loginindex",                //域名显示
+        .state("loginindex",{                      //路由名字
+            url:"/loginindex",                    //域名显示
             templateUrl: "tpls/loginindex.html"  //来源文件
         })
         .state("loginindex.add",{

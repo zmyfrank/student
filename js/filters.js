@@ -11,3 +11,8 @@ var myAppFil = angular.module("myAppFil",[]);
                 return items.slice(pagesize,pagesize+10);     //将原始数据按照 start 分割
             };
     });
+    myAppFil.filter('serch',function () {
+        return function (items,stype,talent,level) {
+            
+        }
+    })
